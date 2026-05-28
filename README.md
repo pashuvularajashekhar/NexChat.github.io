@@ -99,6 +99,20 @@ http://localhost:3001
 
 A test client is available at the root endpoint for quick testing.
 
+## 📦 GitHub Pages Deployment
+
+The `docs/` folder now contains the static chat client that can be published directly via GitHub Pages. Note that GitHub Pages can only host the frontend UI — the Socket.io backend must still run on a separate server.
+
+To use the client on GitHub Pages:
+
+1. Configure GitHub Pages to use the `docs/` folder as the site source.
+2. Publish the site.
+3. Open the chat UI.
+4. Enter your deployed backend URL in the `Backend URL` field.
+5. Join or create a room.
+
+Once the backend is live, you can connect your custom domain to the GitHub Pages site.
+
 ## 📡 API Endpoints
 
 ### REST API
@@ -567,5 +581,6 @@ For issues or questions:
 ---
 
 **Happy Messaging! 🚀**
-#   N e x C h a t . g i t h u b . i o  
+#   N e x C h a t . g i t h u b . i o 
+ 
  

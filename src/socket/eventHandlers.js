@@ -71,12 +71,20 @@ export const initializeSocketEvents = (socket, io) => {
       // Join Socket.io room
       socket.join(roomId);
 
+      const users = room.getUsers().map((id) => {
+        const session = userSessions.get(id);
+        return {
+          userId: id,
+          username: session?.username || id,
+        };
+      });
+
       // Send join confirmation
       socket.emit('room:joined', {
         roomId,
         userId,
         username,
-        users: room.getUsers(),
+        users,
         userCount: room.getUserCount(),
         messageHistory: room.getMessageHistory(),
       });
@@ -86,7 +94,7 @@ export const initializeSocketEvents = (socket, io) => {
         userId,
         username,
         userCount: room.getUserCount(),
-        users: room.getUsers(),
+        users,
       });
 
       // Log event
@@ -131,7 +139,7 @@ export const initializeSocketEvents = (socket, io) => {
 
       // Broadcast message to room
       io.to(roomId).emit('message:received', {
-        ...message.toJSON(),
+        ...message,
         username,
       });
 
@@ -222,12 +230,20 @@ export const initializeSocketEvents = (socket, io) => {
           // Remove user from room
           room.removeUser(userId);
 
+          const users = room.getUsers().map((id) => {
+            const session = userSessions.get(id);
+            return {
+              userId: id,
+              username: session?.username || id,
+            };
+          });
+
           // Notify others
           io.to(roomId).emit('user:left', {
             userId,
             username,
             userCount: room.getUserCount(),
-            users: room.getUsers(),
+            users,
           });
 
           // Delete empty rooms after 1 hour
