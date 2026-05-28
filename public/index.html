@@ -391,6 +391,12 @@
                 showStatus('New room created! Share this ID with others', 'success');
             }
 
+            const originIsLocal = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
+            if (!backendUrl && !originIsLocal) {
+                showStatus('Enter your deployed backend URL to connect from GitHub Pages', 'error');
+                return;
+            }
+
             currentUser = {
                 userId: 'user_' + Math.random().toString(36).substr(2, 9),
                 username: username,
